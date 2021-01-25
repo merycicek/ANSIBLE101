@@ -1,0 +1,39 @@
+---
+- name: creating template
+    hosts: all
+    gather_facts: no
+    become: yes
+    vars:
+    tasks:
+    
+    # - name: hello world loop
+    #   debug:
+    #     msg: " {{ item }} "
+    #   loop:
+    #     - Hello World !
+    #     - Hello World !
+    #     - Hello World !
+    #     - Hello World !
+    #     - Hello World ! 
+
+    - debug: var={{ item }}
+    with_items:
+        - Hello.World
+        - Hello.World
+        - Hello.World
+        - Hello.World
+    
+    - name: deploy template file
+    template:
+        src: template.j2
+        dest: /home/ec2-user/hello-world.txt   
+
+    # - name: hello world loop
+    #   debug:
+    #     msg: " {{ item }} "
+    #   loop:
+    #     - Hello World !
+    #     - Hello World !
+    #     - Hello World !
+    #     - Hello World !
+    #     - Hello World !

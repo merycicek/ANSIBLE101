@@ -19,5 +19,13 @@
     with_items:
       - hostname.stdout
       - uptime.stdout
-
+  
+  - name: shell command
+    shell: my_shell_command
+    register: myshell_output
+  - name: copy the output to a local file
+    copy:
+      content: "stdout_lines"
+      dest: "~/ec2-user/uptime.txt"
+    delegate_to: localhost
       #No worries you will do it insallah O cok Buyuktur hic korkma korkularindan Ona sigin.
