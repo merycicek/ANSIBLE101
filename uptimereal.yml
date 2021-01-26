@@ -9,9 +9,14 @@
     command: /bin/hostname
     changed_when: false
     register: hostname
+  
+  # - name: ensure the file exist
+  #   file:
+  #     path: $HOME/uptime.txt
+  #     state: touch
 
   - name: get uptime
-    shell: /usr/bin/uptime | grep -ohe 'up .*' | sed 's/,//g' | awk '{ print $2" "$3 }'
+    shell: uptime | tail > time.txt
     changed_when: false
     register: uptime
 
@@ -19,13 +24,20 @@
     with_items:
       - hostname.stdout
       - uptime.stdout
+
+
+  # - command: cat /tmp/result.txt
+  #   register: store
+  # - local_action: "copy content='{{ store.stdout }}' dest=/etc/ansible/data.txt"
   
-  - name: shell command
-    shell: my_shell_command
-    register: myshell_output
-  - name: copy the output to a local file
-    copy:
-      content: "stdout_lines"
-      dest: "~/ec2-user/uptime.txt"
-    delegate_to: localhost
-      #No worries you will do it insallah O cok Buyuktur hic korkma korkularindan Ona sigin.
+  # - name: shell command
+  #   shell: my_shell_command
+  #   register: myshell_output
+  # - name: copy the output to a local file
+  #   copy:
+  #     content: "stdout_lines"
+  #     dest: "$HOME/uptime.txt"
+  #   delegate_to: localhost
+  #     #No worries you will do it insallah O cok Buyuktur hic korkma korkularindan Ona sigin.
+
+  # awk '{ print $2" "$3 }'
